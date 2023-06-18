@@ -61,12 +61,12 @@
 /* CSS */
 .button-6 {
   align-items: center;
-  background-color: #FFFFFF;
+  background-color: #2600ff !important;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: .25rem;
   box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
   box-sizing: border-box;
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
   display: inline-flex;
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -96,10 +96,12 @@
 
 .button-6:hover {
   transform: translateY(-1px);
+  background-color: #140180 !important;
+  color: white !important;
 }
 
 .button-6:active {
-  background-color: #F0F0F1;
+  background-color: #40e883 !important;
   border-color: rgba(0, 0, 0, 0.15);
   box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
   color: rgba(0, 0, 0, 0.65);
@@ -386,7 +388,14 @@ a:hover{
             <form action="" id="form">
                 <input type="text" id="searchValue" class="border-2 mt-2 p-2" required>
             <div>
-                <button class="button-6 my-5 ml-2" type="submit" >Search</button>
+                <!-- <button class="button-6 my-5 ml-2" type="submit" >Search</button> -->
+                <button class="button-82-pushable my-5 ml-2"  type="submit" role="button">
+                    <span class="button-82-shadow"></span>
+                    <span class="button-82-edge" style="background: linear-gradient( to left, hsl(205 100% 16% / 1) 0%, hsl(205 100% 32% / 1) 8%, hsl(205 100% 32% / 1) 92%, hsl(205 100% 16% / 1) 100% );"></span>
+                    <span class="button-82-front text" style="background-color: hsl(211.06deg 100% 50%);">
+                      Search
+                    </span>
+                  </button>
                 <!-- <button type="submit" class="border-2">Search</button> -->
                 <!-- <div class="checkbox-wrapper-19 inline" style="transform: translateY(100%);">
                     <input type="checkbox" id="cbtest-19" />
@@ -645,5 +654,3 @@ a:hover{
     }
 </script>
 </html>
-
-
