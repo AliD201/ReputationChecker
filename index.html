@@ -611,6 +611,18 @@
                 <input type="checkbox" name="sites" id="sites10" value="10" />
                 ThreatBook (IP)
             </label>
+            <label>
+                <input type="checkbox" name="sites" id="sites11" value="11" />
+                X-Force Exchang
+            </label>
+            <label>
+                <input type="checkbox" name="sites" id="sites12" value="12" />
+                SCAMALYTICS
+            </label>
+            <!-- <label>
+                <input type="checkbox" name="sites" id="sites13" value="13" />
+                ThreatBook (IP)
+            </label> -->
 
         </div>
         <div class="flex flex-col pt-8">
@@ -702,8 +714,14 @@
     let crowdSec = "https://app.crowdsec.net/cti/*_*1"
     // ThreatBook 
     let ThreatBook = "https://threatbook.io/ip/*_*1"
+    // xforce xchange 
+    let xforce = "https://exchange.xforce.ibmcloud.com/search/*_*1"
+    // xforce xchange 
+    let scamalytics = "https://scamalytics.com/ip/*_*1"
+    
 
-    let sites = [virusTotal, abuseipdb, talos, alienvault, mxtoolbox, urlhaus, urlscanURL, urlscanIP, rstCloud, crowdSec, ThreatBook]
+    let sites = [virusTotal, abuseipdb, talos, alienvault, mxtoolbox,
+     urlhaus, urlscanURL, urlscanIP, rstCloud, crowdSec, ThreatBook, xforce,scamalytics]
 
     StringJoin = (s, r = []) => {
         r.map((v, i) => {
