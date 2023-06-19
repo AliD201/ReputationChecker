@@ -496,6 +496,9 @@
     a:hover {
         color: #1a8464;
     }
+    .blueButton {
+        background-color: hsl(211.06deg 100% 50%);
+    }
 </style>
 
 <body>
@@ -545,11 +548,22 @@
 
         </div>
         <div class="py-2 pl-2">
-            <label for="type"> Type(Not working now):</label>
+            <label for="type"> Presets:</label>
             <select name="type" id="type" class="border-2 dark:bg-gray-600 dark:border-black">
-                <option value="dip"> Preset 1</option>
-                <option value="email"> Preset 2</option>
+                <option value="none"> None</option>
+                <option value="preset1"> Preset 1</option>
+                <option value="preset2"> Preset 2</option>
+                <option value="preset3"> Preset 3</option>
+
             </select>
+            <button class="button-82-pushable my-5 ml-2 group" id="presetButton" type="button" role="button" onclick="savePreset()" disabled>
+                        <span class="button-82-shadow  "></span>
+                        <span class="button-82-edge group-disabled:invisible "
+                            style="background: linear-gradient( to left, hsl(205 100% 16% / 1) 0%, hsl(205 100% 32% / 1) 8%, hsl(205 100% 32% / 1) 92%, hsl(205 100% 16% / 1) 100% );"></span>
+                        <span class="button-82-front text text-sm p-1 blueButton group-disabled:bg-gray-600" style="" disabled>
+                            Save Preset
+                        </span>
+                    </button>
         </div>
         <h3 class="text-2xl"> Sites to Search in:</h3>
         <div class="flex justify-evenly pt-2 pl-2 flex-wrap" id="sitesChecks">
@@ -790,6 +804,42 @@
         document.getElementById("tableData").innerHTML = ""
         console.log("clean")
     }
+
+    function savePreset() {
+        let selection = document.getElementById("type")
+        let selevetionValue = selection.value
+        let checkedBoxes = document.querySelectorAll("input[name='sites']:checked")
+        let checkedToStore = []
+        checkedBoxes.forEach(box => {
+            console.log(box.value)
+            checkedToStore.push(box.value)
+        });
+        console.log(checkedToStore)
+        localStorage.setItem(selection.value, JSON.stringify(checkedToStore))
+    }
+    document.getElementById("type").addEventListener("change", function () {
+        if(document.getElementById("type").value == "none"){
+            document.getElementById("presetButton").disabled = true
+            let checkBoxes = document.querySelectorAll("input[name='sites']")
+                checkBoxes.forEach(box => {
+                box.checked = false
+            });
+            return
+        }
+        document.getElementById("presetButton").disabled = false
+
+        let presetValues = JSON.parse(localStorage.getItem(document.getElementById("type").value))
+        let checkBoxes = document.querySelectorAll("input[name='sites']")
+        checkBoxes.forEach(box => {
+            box.checked = false
+            if (presetValues != undefined && presetValues.includes(box.value) ){
+                console.log(box.value)
+                box.checked = true
+            }
+        });
+
+        
+    })
     //  darkmode
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     function darkmodeF() {
