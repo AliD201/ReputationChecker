@@ -590,6 +590,44 @@
                 </span>
             </button>
         </div>
+        <div class="flex flex-row items-center">
+            <button class="button-82-pushable my-5 ml-2 group" id="selectAllButton" type="button" role="button"
+                onclick="selectAll('ip')" >
+                <span class="button-82-shadow  "></span>
+                <span class="button-82-edge group-disabled:invisible "
+                    style="background: linear-gradient( to left, hsl(205 100% 16% / 1) 0%, hsl(205 100% 32% / 1) 8%, hsl(205 100% 32% / 1) 92%, hsl(205 100% 16% / 1) 100% );"></span>
+                <span id="selectAllText" data-selectedAll="false" class="button-82-front text text-sm p-1 blueButton group-disabled:bg-gray-600" style="" disabled>
+                    Select IP based
+                </span>
+            </button>
+            <button class="button-82-pushable my-5 ml-2 group" id="selectAllButton" type="button" role="button"
+                onclick="selectAll('hash')" >
+                <span class="button-82-shadow  "></span>
+                <span class="button-82-edge group-disabled:invisible "
+                    style="background: linear-gradient( to left, hsl(205 100% 16% / 1) 0%, hsl(205 100% 32% / 1) 8%, hsl(205 100% 32% / 1) 92%, hsl(205 100% 16% / 1) 100% );"></span>
+                <span id="selectAllText" data-selectedAll="false" class="button-82-front text text-sm p-1 blueButton group-disabled:bg-gray-600" style="" disabled>
+                    Select Hash based
+                </span>
+            </button>
+            <button class="button-82-pushable my-5 ml-2 group" id="selectAllButton" type="button" role="button"
+                onclick="selectAll('mail')" >
+                <span class="button-82-shadow  "></span>
+                <span class="button-82-edge group-disabled:invisible "
+                    style="background: linear-gradient( to left, hsl(205 100% 16% / 1) 0%, hsl(205 100% 32% / 1) 8%, hsl(205 100% 32% / 1) 92%, hsl(205 100% 16% / 1) 100% );"></span>
+                <span id="selectAllText" data-selectedAll="false" class="button-82-front text text-sm p-1 blueButton group-disabled:bg-gray-600" style="" disabled>
+                    Select Mail based
+                </span>
+            </button>
+            <button class="button-82-pushable my-5 ml-2 group" id="selectAllButton" type="button" role="button"
+                onclick="selectAll('url')" >
+                <span class="button-82-shadow  "></span>
+                <span class="button-82-edge group-disabled:invisible "
+                    style="background: linear-gradient( to left, hsl(205 100% 16% / 1) 0%, hsl(205 100% 32% / 1) 8%, hsl(205 100% 32% / 1) 92%, hsl(205 100% 16% / 1) 100% );"></span>
+                <span id="selectAllText" data-selectedAll="false" class="button-82-front text text-sm p-1 blueButton group-disabled:bg-gray-600" style="" disabled>
+                    Select URL based
+                </span>
+            </button>
+        </div>
         <div class="flex justify-evenly pt-2 pl-2 flex-wrap" id="sitesChecks">
 
             <label>
@@ -751,11 +789,26 @@
 
 
     let sites = [virusTotal, abuseipdb, talos, alienvault, mxtoolbox,
-        urlhaus, urlscanURL, urlscanIP, crowdSec, rstCloud, ThreatBook, xforce, scamalytics]
-
-    StringJoin = (s, r = []) => {
+    urlhaus, urlscanURL, urlscanIP, crowdSec, rstCloud, ThreatBook, xforce, scamalytics]
+    let ip_sites = ['0','1','2','3','7','8','9','10','11','12']
+    let hash_sites = ['0','3','9','11']
+    let mail_sites = ['0','2','4','9','11']
+    let url_sites = ['0','2','3','5','6','9','11']
+    let encodeList =["virustotal"]
+        StringJoin = (s, r = []) => {
         r.map((v, i) => {
-            s = s.replace('*_*' + (i + 1), v)
+            console.log(s.split('.com'), "O_O")
+            encodeList.every(element => {
+                if (s.split('.com')[0].includes(element)){
+                    v = encodeURIComponent(v)
+                    if(element == 'virustotal'){
+                        v = v.replaceAll("%","%25")
+                        console.log("greetings")
+                    }
+                    return
+                }
+            })
+            s = s.replace('*_*' + (i + 1),v)
         })
         return s
     }
@@ -834,21 +887,56 @@
         }
 
     }
-    function selectAll(){
+    function selectAll(type='all'){
         let current = document.getElementById("selectAllText")
-        let checkedBoxes = document.querySelectorAll("input[name='sites']")
-        if(current.dataset.selectedall == "false"){
-            current.dataset.selectedall = "true"
-                checkedBoxes.forEach(box => {
-                box.checked = true
-            });
-            current.textContent = "Deselect All"
-        }else {
-            current.dataset.selectedall = "false"
-            checkedBoxes.forEach(box => {
-                box.checked = false
-            });
-            current.textContent = "select All"
+        let checkBoxes = document.querySelectorAll("input[name='sites']")
+        if (type == 'all'){
+            console.log("hi")
+            if(current.dataset.selectedall == "false"){
+                current.dataset.selectedall = "true"
+                    checkBoxes.forEach(box => {
+                    box.checked = true
+                });
+                current.textContent = "Deselect All"
+            }else {
+                current.dataset.selectedall = "false"
+                checkBoxes.forEach(box => {
+                    box.checked = false
+                });
+                current.textContent = "select All"
+            }
+        }else if (type == 'ip'){
+            checkBoxes.forEach(box => {
+                if(ip_sites.includes(box.value)){
+                    box.checked = true
+                }else{
+                    box.checked = false
+                }
+                });
+        }else if (type == 'hash'){
+            checkBoxes.forEach(box => {
+                if(hash_sites.includes(box.value)){
+                    box.checked = true
+                }else{
+                    box.checked = false
+                }
+                });
+        }else if (type == 'mail'){
+            checkBoxes.forEach(box => {
+                if(mail_sites.includes(box.value)){
+                    box.checked = true
+                }else{
+                    box.checked = false
+                }
+                });
+        }else if (type == 'url'){
+            checkBoxes.forEach(box => {
+                if(url_sites.includes(box.value)){
+                    box.checked = true
+                }else{
+                    box.checked = false
+                }
+                });
         }
     }
 
